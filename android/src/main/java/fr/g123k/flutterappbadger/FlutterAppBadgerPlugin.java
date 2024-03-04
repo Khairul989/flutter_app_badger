@@ -56,7 +56,8 @@ public class FlutterAppBadgerPlugin implements MethodCallHandler, FlutterPlugin 
       if (Build.MANUFACTURER.equalsIgnoreCase("Xiaomi")) {
         Notification.Builder  builder = new Notification.Builder(applicationContext)
           .setContentTitle(call.argument("title").toString())
-          .setContentText(call.argument("body").toString());
+          .setContentText(call.argument("body").toString())
+          .setSmallIcon(applicationContext.getApplicationInfo().icon);
         
         mNotificationManager.cancel(notificationId);
         notificationId++;
