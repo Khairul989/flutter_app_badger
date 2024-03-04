@@ -8,14 +8,16 @@ class FlutterAppBadger {
       const MethodChannel('g123k/flutter_app_badger');
 
   static Future<void> updateBadgeCount(int count,
-      {String title = 'Missed notification', String description = ''}) async {
+      {required String channelId,
+      required String title,
+      required String body}) async {
     final mock = _mockUpdateBadgeCount;
     if (mock != null) {
       await mock(count);
       return;
     }
     _channel.invokeMethod('updateBadgeCount',
-        {"count": count, "title": title, "description": description});
+        {"count": count, "channelId": channelId, "title": title, "body": body});
   }
 
   static Future<void> removeBadge() async {

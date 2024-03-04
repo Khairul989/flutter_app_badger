@@ -56,8 +56,7 @@ public class FlutterAppBadgerPlugin implements MethodCallHandler, FlutterPlugin 
       if (Build.MANUFACTURER.equalsIgnoreCase("Xiaomi")) {
         Notification.Builder  builder = new Notification.Builder(applicationContext)
           .setContentTitle(call.argument("title").toString())
-          .setContentText(call.argument("description").toString())
-          .setSmallIcon(applicationContext.getApplicationInfo().icon);
+          .setContentText(call.argument("body").toString());
         
         mNotificationManager.cancel(notificationId);
         notificationId++;
@@ -65,7 +64,7 @@ public class FlutterAppBadgerPlugin implements MethodCallHandler, FlutterPlugin 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           setupNotificationChannel();
 
-          builder.setChannelId(NOTIFICATION_CHANNEL);
+          builder.setChannelId(call.argument("channelId").toString());
         }
         Notification notification = builder.build();
         ShortcutBadger.applyNotification(applicationContext, notification, Integer.valueOf(call.argument("count").toString()));
@@ -74,8 +73,7 @@ public class FlutterAppBadgerPlugin implements MethodCallHandler, FlutterPlugin 
       else
       {
         Log.d("App Badger: ", "Other Model detected");
-
-      ShortcutBadger.applyCount(applicationContext, Integer.valueOf(call.argument("count").toString()));
+        ShortcutBadger.applyCount(applicationContext, Integer.valueOf(call.argument("count").toString()));
       }
       result.success(null);
     } else if (call.method.equals("removeBadge")) {
@@ -88,12 +86,4 @@ public class FlutterAppBadgerPlugin implements MethodCallHandler, FlutterPlugin 
     }
   }
 
-  @TargetApi(Build.VERSION_CODES.O)
-    private void setupNotificationChannel() {
-        NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, "ShortcutBadger Sample",
-                NotificationManager.IMPORTANCE_DEFAULT);
-
-        mNotificationManager.createNotificationChannel(channel);
-    }
-  
 }

@@ -73,7 +73,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _addBadge() {
-    FlutterAppBadger.updateBadgeCount(1);
+    FlutterAppBadger.updateBadgeCount(1,
+        channelId: "flutter_app_badger", title: "title", body: "body");
   }
 
   void _removeBadge() {
