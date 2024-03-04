@@ -86,4 +86,11 @@ public class FlutterAppBadgerPlugin implements MethodCallHandler, FlutterPlugin 
     }
   }
 
+  //* Setup Notification Channel
+  @TargetApi(Build.VERSION_CODES.O)
+  private void setupNotificationChannel() {
+      NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL, "ShortcutBadger Sample",
+              NotificationManager.IMPORTANCE_DEFAULT);
+      mNotificationManager.createNotificationChannel(channel);
+  }
 }
